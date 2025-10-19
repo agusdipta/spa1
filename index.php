@@ -58,14 +58,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reserve'])) {
 </head>
 <body>
 <header class="site-header glass">
-  <div class="container nav">
+  <div class="container nav" data-animate>
     <div class="brand">
       <span class="logo">🌿</span>
       <span class="brand-name">Kupu Kupu Mas Spa</span>
     </div>
-    <nav>
+    <button class="nav-toggle" type="button" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav-links">
       <a href="#home">Home</a>
       <a href="#services">Services</a>
+      <a href="#experience">Experience</a>
       <a href="#about">About</a>
       <a href="#reserve" class="btn btn-primary">Reserve</a>
     </nav>
@@ -74,26 +78,84 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reserve'])) {
 
 <section id="home" class="hero" style="--hero:url('<?= htmlspecialchars($hero['hero_image'] ?? 'assets/hero.jpg') ?>')">
   <div class="overlay"></div>
-  <div class="container hero-inner">
+  <div class="container hero-inner" data-animate>
+     <div class="hero-badge">Award-winning Balinese Wellness</div>
      <h1><?= htmlspecialchars($hero['title'] ?? 'Recharge in Style') ?></h1>
      <p class="subtitle"><?= htmlspecialchars($hero['subtitle'] ?? 'Modern Bali-inspired treatments for deep relaxation') ?></p>
-     <a href="#services" class="btn btn-outline">Explore Services</a>
-     <a href="#reserve" class="btn btn-primary">Book Now</a>
+     <div class="hero-actions">
+       <a href="#services" class="btn btn-outline">Explore Services</a>
+       <a href="#reserve" class="btn btn-primary">Book Now</a>
+     </div>
+     <div class="hero-meta">
+       <span>✨ Complimentary welcome ritual</span>
+       <span>🧖‍♀️ Private suites available</span>
+       <span>🌺 Natural aromatherapy oils</span>
+     </div>
+  </div>
+  <div class="hero-orb"></div>
+</section>
+
+<section id="experience" class="section section-features">
+  <div class="container">
+    <div class="section-header" data-animate>
+      <h2 class="section-title">Experience Elevated Wellness</h2>
+      <p class="muted">Curated journeys that harmonise body, mind, and spirit in the heart of Ungasan.</p>
+    </div>
+    <div class="features-grid">
+      <article class="feature-card" data-animate>
+        <div class="feature-icon">🕯️</div>
+        <h3>Immersive Atmosphere</h3>
+        <p>Soothing soundscapes, gentle lighting, and bespoke scents crafted to help you unwind instantly.</p>
+      </article>
+      <article class="feature-card" data-animate>
+        <div class="feature-icon">🌊</div>
+        <h3>Hydro Experience Lounge</h3>
+        <p>Rejuvenate in our vitality pool and infrared sauna before your treatment for complete restoration.</p>
+      </article>
+      <article class="feature-card" data-animate>
+        <div class="feature-icon">💆‍♀️</div>
+        <h3>Master Therapists</h3>
+        <p>Our certified therapists personalise every session using centuries-old Balinese healing techniques.</p>
+      </article>
+      <article class="feature-card" data-animate>
+        <div class="feature-icon">🥂</div>
+        <h3>Signature Rituals</h3>
+        <p>Indulge in welcome refreshments, curated playlists, and post-treatment elixirs tailored to you.</p>
+      </article>
+    </div>
   </div>
 </section>
 
 <section id="services" class="section">
   <div class="container">
-    <h2 class="section-title">Our Signature Treatments</h2>
+    <div class="section-header" data-animate>
+      <h2 class="section-title">Our Signature Treatments</h2>
+      <div class="section-description">
+        <p class="muted">Discover personalised rituals designed to restore, revitalise, and realign your energy.</p>
+        <div class="legend">
+          <span><span class="dot premium"></span> Premium Oils</span>
+          <span><span class="dot suite"></span> Private Suite</span>
+        </div>
+      </div>
+    </div>
     <div class="cards">
       <?php while($row = $services->fetch_assoc()): ?>
-        <div class="card">
+        <div class="card" data-animate>
           <div class="card-media" style="background-image:url('<?= htmlspecialchars($row['image_path'] ?: 'assets/placeholder.jpg') ?>')"></div>
           <div class="card-body">
-            <h3><?= htmlspecialchars($row['name']) ?></h3>
-            <p class="muted"><?= htmlspecialchars($row['duration_min']) ?> min &middot; Rp<?= number_format($row['price']) ?></p>
+            <div class="card-header">
+              <h3><?= htmlspecialchars($row['name']) ?></h3>
+              <p class="muted tag"><?= htmlspecialchars($row['duration_min']) ?> min</p>
+            </div>
+            <p class="price">Rp<?= number_format($row['price']) ?></p>
             <p><?= nl2br(htmlspecialchars($row['description'])) ?></p>
-            <a href="#reserve" class="btn btn-soft" data-service-id="<?= $row['id'] ?>" data-service-name="<?= htmlspecialchars($row['name']) ?>">Reserve</a>
+            <div class="card-footer">
+              <div class="card-flags">
+                <span class="chip premium">Premium oils</span>
+                <span class="chip suite">Private suite</span>
+              </div>
+              <a href="#reserve" class="btn btn-soft" data-service-id="<?= $row['id'] ?>" data-service-name="<?= htmlspecialchars($row['name']) ?>">Reserve</a>
+            </div>
           </div>
         </div>
       <?php endwhile; ?>
@@ -111,6 +173,69 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reserve'])) {
     </div>
     <div class="about-media">
       <img src="assets/about.jpg" alt="Spa ambience">
+    </div>
+  </div>
+</section>
+
+<section class="section timeline">
+  <div class="container">
+    <div class="section-header" data-animate>
+      <h2 class="section-title">Wellness Journey</h2>
+      <p class="muted">Your visit unfolds through calming moments, each designed to rejuvenate you from within.</p>
+    </div>
+    <div class="timeline-grid">
+      <article class="timeline-card" data-animate>
+        <span class="timeline-step">01</span>
+        <h3>Arrival Ritual</h3>
+        <p>Begin with a grounding tea ceremony and aromatherapy breathing ritual curated by our wellness concierge.</p>
+      </article>
+      <article class="timeline-card" data-animate>
+        <span class="timeline-step">02</span>
+        <h3>Bespoke Consultation</h3>
+        <p>Your therapist tailors the treatment, selecting oils, pressure, and focus areas to match your goals.</p>
+      </article>
+      <article class="timeline-card" data-animate>
+        <span class="timeline-step">03</span>
+        <h3>Signature Treatment</h3>
+        <p>Relax in a private suite with immersive lighting, curated music, and temperature-controlled beds.</p>
+      </article>
+      <article class="timeline-card" data-animate>
+        <span class="timeline-step">04</span>
+        <h3>Post-therapy Glow</h3>
+        <p>Unwind in our serenity lounge with botanical refreshments and mindful stretching guidance.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section testimonials">
+  <div class="container">
+    <div class="section-header" data-animate>
+      <h2 class="section-title">Loved by Our Guests</h2>
+      <p class="muted">Real stories from travellers and locals who made Kupu Kupu Mas Spa their haven.</p>
+    </div>
+    <div class="testimonials-grid">
+      <article class="testimonial" data-animate>
+        <p class="quote">“The ambience transports you instantly. My therapist intuitively knew every pressure point.”</p>
+        <div class="meta">
+          <span class="name">Nadia S.</span>
+          <span class="detail">Wellness Retreat Guest</span>
+        </div>
+      </article>
+      <article class="testimonial" data-animate>
+        <p class="quote">“Luxurious yet warm. The welcome ritual and hydro lounge made my Bali trip unforgettable.”</p>
+        <div class="meta">
+          <span class="name">Jackson T.</span>
+          <span class="detail">Digital Nomad</span>
+        </div>
+      </article>
+      <article class="testimonial" data-animate>
+        <p class="quote">“Loved the private suite! The post-treatment elixir was such a thoughtful finishing touch.”</p>
+        <div class="meta">
+          <span class="name">Putri A.</span>
+          <span class="detail">Local Member</span>
+        </div>
+      </article>
     </div>
   </div>
 </section>
@@ -159,6 +284,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reserve'])) {
   </div>
 </section>
 
+<section class="section faq alt">
+  <div class="container">
+    <div class="section-header" data-animate>
+      <h2 class="section-title">Frequently Asked</h2>
+      <p class="muted">Have a question? Explore quick answers before reaching out to our concierge.</p>
+    </div>
+    <div class="faq-list">
+      <article class="faq-item" data-animate>
+        <button class="faq-question" type="button">How early should I arrive?<span class="icon">+</span></button>
+        <div class="faq-answer">
+          <p>Arrive at least 20 minutes before your booking to enjoy our welcome lounge and pre-treatment rituals.</p>
+        </div>
+      </article>
+      <article class="faq-item" data-animate>
+        <button class="faq-question" type="button">Do you offer couple treatments?<span class="icon">+</span></button>
+        <div class="faq-answer">
+          <p>Yes, our couple suites are equipped with dual treatment beds, rainfall showers, and mood lighting controls.</p>
+        </div>
+      </article>
+      <article class="faq-item" data-animate>
+        <button class="faq-question" type="button">Can I customise my ritual?<span class="icon">+</span></button>
+        <div class="faq-answer">
+          <p>Absolutely. Choose from aroma blends, pressure levels, and targeted enhancements guided by your therapist.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
 <footer class="site-footer">
   <div class="container footer-grid">
     <div>
@@ -177,5 +331,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reserve'])) {
   </div>
   <div class="container tiny muted">© <?= date('Y') ?> Kupu Kupu Mas Spa. All rights reserved.</div>
 </footer>
+
+<a class="floating-cta" href="https://wa.me/<?= $WA_NUMBER ?>" target="_blank" rel="noopener">
+  <span class="pulse"></span>
+  <span class="icon">💬</span>
+  <span class="text">Chat with us</span>
+</a>
 </body>
 </html>
